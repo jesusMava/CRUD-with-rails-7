@@ -5,10 +5,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-ruby@v1
         with:
-          node-version: '16.13.2'
-      - run: npm install npm-run-all
-      - run: corepack enable
-      - run: yarn -v
-      - run: node -v
+          ruby-version: 3.1.0
+      - name: Build and run test
+        env:
+          DATABASE_URL: postgres://postgres:@localhost:5432/test
+          RAILS_ENV: test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ''
+        run: |
+          gem install bundler
+          gem install rubocop
+          bundle execute rubocop
