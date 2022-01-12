@@ -11,3 +11,4 @@ jobs:
       - run: npm install npm-run-all
       - run: corepack enable
       - run: yarn -v
+      - run: node -v
