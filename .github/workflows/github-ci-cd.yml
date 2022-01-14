@@ -1,13 +1,24 @@
 name: CI/CD
-on: [push]
+on: [push, pull_request]
 jobs:
   check-bats-version:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: ruby/setup-ruby@v1.92.0
         with:
-          node-version: '16.13.2'
-      - run: npm install npm-run-all
-      - run: corepack enable
-      - run: yarn -v
+          ruby-version: 3.1
+          bundler-cache: true
+      - run: gem install bundler
+      - run: bundle install
+      - run: bundle exec rubocop
+        # - name: Build and run test
+        #   env:
+        #     DATABASE_URL: postgres://postgres:@localhost:5432/test
+        #     RAILS_ENV: test
+        #     POSTGRES_USER: postgres
+        #     POSTGRES_PASSWORD: ''
+        #   run: |
+        #     gem install bundler
+        #     gem install rubocop
+        #     bundle execute rubocop
