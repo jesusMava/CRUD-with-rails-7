@@ -1,14 +1,13 @@
 name: CI/CD
 on: [push, pull_request]
 jobs:
-  install-ruby-and-run-test:
+  check-bats-version:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Setup Ruby
       - uses: ruby/setup-ruby@v1.92.0
         with:
-          ruby-version: 2.6
+          ruby-version: 3.1
           bundler-cache: true
       - run: gem install bundler
       - run: bundle install
